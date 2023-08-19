@@ -1,0 +1,41 @@
+.spin {
+  animation-name: spin;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.scale {
+  animation-name: scale;
+  animation-duration: 15000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.spinScale {
+  animation-name: scale, spin;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scale {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.25;
+  }
+  100% {
+    scale: 1;
+  }
+}
