@@ -26,9 +26,14 @@ const MyApp = ({ Component, pageProps }) => {
             hideBackdrop
             anchor="left"
             variant="permanent"
-            className="drawer-sx"
+            sx={{ display: "flex", flex: 1 }}
             PaperProps={{
-              className: "drawer-paper-props-style",
+              style: {
+                width: "100%",
+                height: "100%",
+                position: "relative",
+                padding: 25,
+              },
             }}
           >
             <Link href={ROUTES.About}>About</Link>
