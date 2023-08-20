@@ -1,7 +1,6 @@
 const enum ROUTES {
   Home = "/",
-  About = "/about",
-  Game = "/game",
+  Penaltys = "/penaltys",
   Bank = "/bank",
 }
 

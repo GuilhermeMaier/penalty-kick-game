@@ -15,8 +15,11 @@ const App = () => {
       useCoinsStore.persist?.hasHydrated() === true &&
         setTimeout(
           () =>
-            coins === 0 &&
-            window.location.replace(`${window.location.origin}${ROUTES.Bank}`),
+            window.location.replace(
+              `${window.location.origin}${
+                coins === 0 ? ROUTES.Bank : ROUTES.Penaltys
+              }`
+            ),
           1000
         )
     );

@@ -3,7 +3,7 @@ import ROUTES from "@utils/types/routes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const About = () => {
+const Penaltys = () => {
   const { coins, setCoins, coinsFormatted } = useCoinsStore();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -40,4 +40,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Penaltys;

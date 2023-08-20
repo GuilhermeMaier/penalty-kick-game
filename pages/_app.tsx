@@ -29,8 +29,7 @@ const MyApp = ({ Component, pageProps }) => {
             },
           }}
         >
-          <Link href={ROUTES.About}>About</Link>
-          <Link href={ROUTES.Game}>Pênaltis</Link>
+          <Link href={ROUTES.Penaltys}>Pênaltis</Link>
           <Link href={ROUTES.Bank}>Banco</Link>
         </Drawer>
       </DrawerContainer>

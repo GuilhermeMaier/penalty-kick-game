@@ -1,7 +1,7 @@
 const enum storeTable {
   coinsStore = "coinsStore",
   bankStore = "bankStore",
-  gameStore = "gameStore",
+  penaltysStore = "penaltysStore",
 }
 
 export default storeTable;
