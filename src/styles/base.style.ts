@@ -22,6 +22,6 @@ export const MainTitle = styled.div`
   padding: 15px 0;
 `;
 
-export const Text = styled.div`
+export const CommonText = styled.div`
   font-size: 18px;
 `;

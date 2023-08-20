@@ -3,10 +3,10 @@ import { Button, TextField } from "@mui/material";
 import { useBankStore } from "@stores/bankStore";
 import { useCoinsStore } from "@stores/coinsStore";
 import {
+  CommonText,
   Container,
   MainContentContainer,
   MainTitle,
-  Text,
 } from "@styles/base.style";
 import { useEffect, useState } from "react";
 
@@ -33,14 +33,14 @@ const Bank = () => {
       ) : (
         <MainContentContainer>
           <MainTitle>Banco de Moedas</MainTitle>
-          <Text>{`${
+          <CommonText>{`${
             coins === 0
               ? "Você está sem moedas!"
               : `Atualmente você tem apenas ${coinsFormatted} ${
                   coins === 1 ? "moeda" : "moedas"
                 }! `
-          }`}</Text>
-          <Text>Compre mais moedas para continuar jogando!</Text>
+          }`}</CommonText>
+          <CommonText>Compre mais moedas para continuar jogando!</CommonText>
           <div style={{ display: "flex", marginTop: 15 }}>
             <TextField
               label="Moedas"
