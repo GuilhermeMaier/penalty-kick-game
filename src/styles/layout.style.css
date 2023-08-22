@@ -9,3 +9,29 @@
   position: relative;
   padding: 25px;
 }
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    color: #d36b12;
+    transition: all 0.5s ease;
+  }
+
+  &:hover svg {
+    color: #ff7500;
+    scale: 1.2;
+  }
+}
+
+.iconContainer svg {
+  color: #d36b12;
+  transition: all 0.5s ease;
+}
+
+.iconContainer:hover svg {
+  color: #ff7500;
+  scale: 1.2;
+}

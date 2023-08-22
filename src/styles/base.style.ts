@@ -25,3 +25,50 @@ export const MainTitle = styled.div`
 export const CommonText = styled.div`
   font-size: 18px;
 `;
+
+export const HorizontalCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const HorizontalSpacer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+`;
+
+export const HorizontalEvenSpacer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 25px 0;
+`;
+
+export const VerticalSpacer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 25px;
+`;
+
+export const VerticalEvenSpacer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 25px;
+`;
+
+export const Filler = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+export const ButtonHolder = styled.div`
+  background-color: white;
+  border-radius: 4px;
+  margin: 0 4px;
+`;

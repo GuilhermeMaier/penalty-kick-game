@@ -16,10 +16,8 @@ const Bank = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(
-      useCoinsStore.persist?.hasHydrated() === true &&
-        setTimeout(() => setIsLoading(false), 1000)
-    );
+    useCoinsStore.persist?.hasHydrated() === true &&
+      setTimeout(() => setIsLoading(false), 500);
   }, [useCoinsStore.persist?.hasHydrated()]);
 
   useEffect(() => {
