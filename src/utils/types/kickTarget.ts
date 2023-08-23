@@ -7,10 +7,19 @@ export type KickTarget =
   | "top-right";
 
 export enum KickPosition {
-  BottomLeft = "bottom-left",
-  BottomCenter = "bottom-center",
-  BottomRight = "bottom-right",
-  TopLeft = "top-left",
-  TopCenter = "top-center",
-  TopRight = "top-right",
+  BottomLeft = "BottomLeft",
+  BottomCenter = "BottomCenter",
+  BottomRight = "BottomRight",
+  TopLeft = "TopLeft",
+  TopCenter = "TopCenter",
+  TopRight = "TopRight",
+}
+
+export enum KickPositionTranslated {
+  BottomLeft = "rasteiro na esquerda",
+  BottomCenter = "rasteiro no meio",
+  BottomRight = "rasteiro na direita",
+  TopLeft = "na gaveta esquerda",
+  TopCenter = "alto no meio",
+  TopRight = "na gaveta direita",
 }

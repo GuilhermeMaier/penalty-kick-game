@@ -1,6 +1,7 @@
 import BallLoading from "@components/ballLoading";
-import { SportsSoccerRounded } from "@mui/icons-material";
+import { SportsSoccerRounded, SportsSoccerTwoTone } from "@mui/icons-material";
 import {
+  Alert,
   Button,
   List,
   ListItem,
@@ -20,7 +21,8 @@ import {
   VerticalSpacer,
 } from "@styles/base.style";
 import goleira2 from "@utils/images/goleira-2.jpg";
-import { KickPosition, KickTarget } from "@utils/types/kickTarget";
+import { DicePosition } from "@utils/types/dicePosition";
+import { KickPosition, KickPositionTranslated } from "@utils/types/kickTarget";
 import ROUTES from "@utils/types/routes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -28,7 +30,9 @@ import {
   BottomCenterContainer,
   BottomLeftContainer,
   BottomRightContainer,
+  CenteredAlertContainer,
   FillerCenteredBottomContainer,
+  FillerCenteredTopContainer,
   ImageContainer,
   ImageParentContainer,
   TopCenterContainer,
@@ -51,8 +55,16 @@ const Penaltys = () => {
     setKickTargetsVisible,
     kickTarget,
     setKickTarget,
+    keeperTarget,
+    setKeeperTarget,
+    reset,
   } = usePenaltysStore();
   const [isLoading, setIsLoading] = useState(true);
+  const [isAlertOpened, setIsAlertOpened] = useState(false);
+  const [alertText, setAlertText] = useState(null);
+  const [currentResult, setCurrentResult] = useState<"goal" | "defense" | null>(
+    null
+  );
   const regras: string[] = [
     "1 moeda dá direito a 5 chutes.",
     "Se o goleiro defender 3 chutes você perde.",
@@ -64,18 +76,78 @@ const Penaltys = () => {
   const startGame = () => {
     setCoins(coins - 1);
     setIsGameStarted(true);
+    setGoals(0);
+    setDefenses(0);
     setKicks(5);
   };
 
   const handleKick = () => {
+    kick();
     setKickTargetsVisible(false);
     setKickTarget(null);
-    setKicks(kicks - 1);
   };
 
-  const handleKickPosition = (target: KickTarget) => {
+  const handleKickPosition = (target: KickPosition) => {
     setKickTarget(target);
   };
+
+  const rollDice = (): number => {
+    const min = 1;
+    const max = 6;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const kick = () => {
+    const ballDirection = kickTarget || getRandomKickTarget();
+    const keeperDirection = getRandomKeeperTarget();
+
+    if (ballDirection !== keeperDirection) {
+      setCurrentResult("goal");
+      setAlertText(
+        `Golaaaaaaço!!! Você chutou ${KickPositionTranslated[ballDirection]} sem chance pro goleiro que pulou ${KickPositionTranslated[keeperDirection]}!`
+      );
+    }
+    if (ballDirection === keeperDirection) {
+      setCurrentResult("defense");
+      setAlertText(
+        `Tafareeeeeeeeeeel!!! Você chutou ${KickPositionTranslated[ballDirection]} e o goleiro brilhou encaixando a bola. Sem chances!`
+      );
+    }
+
+    setTimeout(() => {
+      if (ballDirection !== keeperDirection) {
+        setGoals(goals + 1);
+      }
+      if (ballDirection === keeperDirection) {
+        setDefenses(defenses + 1);
+      }
+      setKicks(kicks - 1);
+      setIsAlertOpened(true);
+    }, 2500);
+    setTimeout(() => {
+      setCurrentResult(null);
+      setIsAlertOpened(false);
+    }, 7500);
+  };
+
+  const getRandomKickTarget = (): KickPosition => {
+    const kickDiceRolled = rollDice();
+    const diceKickPosition = DicePosition[kickDiceRolled];
+    return KickPosition[diceKickPosition];
+  };
+
+  const getRandomKeeperTarget = () => {
+    const keeperDiceRolled = rollDice();
+    const diceKickPosition = DicePosition[keeperDiceRolled];
+    return KickPosition[diceKickPosition];
+  };
+
+  useEffect(() => {
+    console.log("isGameStarted", isGameStarted);
+    console.log("goals", goals);
+    console.log("defenses", defenses);
+    console.log("kicks", kicks);
+  }, [goals, defenses]);
 
   useEffect(() => {
     if (useCoinsStore.persist?.hasHydrated() === true) {
@@ -114,6 +186,59 @@ const Penaltys = () => {
                   }}
                 />
               </ImageContainer>
+              {isGameStarted && (
+                <FillerCenteredTopContainer
+                  style={{ padding: 8, position: "absolute" }}
+                >
+                  <div>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={goals > 0 ? "success" : "disabled"}
+                    />
+                  </div>
+                  <div>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={goals > 1 ? "success" : "disabled"}
+                    />
+                  </div>
+                  <div>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={goals > 2 ? "success" : "disabled"}
+                    />
+                  </div>
+                  <div style={{ marginLeft: 25 }}>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={defenses > 0 ? "error" : "disabled"}
+                    />
+                  </div>
+                  <div>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={defenses > 1 ? "error" : "disabled"}
+                    />
+                  </div>
+                  <div>
+                    <SportsSoccerTwoTone
+                      className={"spin"}
+                      color={defenses > 2 ? "error" : "disabled"}
+                    />
+                  </div>
+                </FillerCenteredTopContainer>
+              )}
+              <CenteredAlertContainer>
+                {isAlertOpened && (
+                  <Alert
+                    variant="filled"
+                    severity={currentResult === "goal" ? "success" : "error"}
+                    sx={{ maxWidth: "60%" }}
+                  >
+                    {alertText}
+                  </Alert>
+                )}
+              </CenteredAlertContainer>
               <FillerCenteredBottomContainer style={{ padding: 8 }}>
                 <div style={{ display: kickTargetsVisible ? "block" : "none" }}>
                   <TopLeftContainer
@@ -202,7 +327,7 @@ const Penaltys = () => {
                 >
                   <Button
                     variant="contained"
-                    disabled={!isGameStarted}
+                    disabled={!isGameStarted || currentResult !== null}
                     onClick={() => {
                       setKickTargetsVisible(true);
                     }}
@@ -213,7 +338,7 @@ const Penaltys = () => {
                 <ButtonHolder>
                   <Button
                     variant="contained"
-                    disabled={!isGameStarted}
+                    disabled={!isGameStarted || currentResult !== null}
                     onClick={handleKick}
                   >
                     Chutar

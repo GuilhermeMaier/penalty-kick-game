@@ -20,6 +20,15 @@ export const ImageContainer = styled.div`
   max-height: 449;
 `;
 
+export const FillerCenteredTopContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
 export const FillerCenteredBottomContainer = styled.div`
   position: relative;
   width: 100%;
@@ -27,6 +36,15 @@ export const FillerCenteredBottomContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+`;
+
+export const CenteredAlertContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `;
 
 export const InImageBottomButton = styled.div`

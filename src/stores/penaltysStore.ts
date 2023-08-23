@@ -1,7 +1,5 @@
-import { KickTarget } from "@utils/types/kickTarget";
-import storeTable from "@utils/types/storeTable";
+import { KickPosition } from "@utils/types/kickTarget";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export interface IPenaltysStore {
   isGameStarted: boolean;
@@ -14,39 +12,37 @@ export interface IPenaltysStore {
   setDefenses: (defenses: number) => void;
   kickTargetsVisible: boolean;
   setKickTargetsVisible: (kickTargetsVisible: boolean) => void;
-  kickTarget: KickTarget;
-  setKickTarget: (kickTarget: KickTarget) => void;
+  kickTarget: KickPosition;
+  setKickTarget: (kickTarget: KickPosition) => void;
+  keeperTarget: KickPosition;
+  setKeeperTarget: (keeperTarget: KickPosition) => void;
   reset: () => void;
 }
 
-export const usePenaltysStore = create<IPenaltysStore>()(
-  persist(
-    (set) => ({
+export const usePenaltysStore = create<IPenaltysStore>()((set) => ({
+  isGameStarted: false,
+  setIsGameStarted: (isGameStarted) => set(() => ({ isGameStarted })),
+  kicks: 0,
+  setKicks: (kicks) => set(() => ({ kicks })),
+  goals: 0,
+  setGoals: (goals) => set(() => ({ goals })),
+  defenses: 0,
+  setDefenses: (defenses) => set(() => ({ defenses })),
+  kickTargetsVisible: null,
+  setKickTargetsVisible: (kickTargetsVisible) =>
+    set(() => ({ kickTargetsVisible })),
+  kickTarget: null,
+  setKickTarget: (kickTarget) => set(() => ({ kickTarget })),
+  keeperTarget: null,
+  setKeeperTarget: (keeperTarget) => set(() => ({ keeperTarget })),
+  reset: () =>
+    set(() => ({
       isGameStarted: false,
-      setIsGameStarted: (isGameStarted) => set(() => ({ isGameStarted })),
       kicks: 0,
-      setKicks: (kicks) => set(() => ({ kicks })),
       goals: 0,
-      setGoals: (goals) => set(() => ({ goals })),
       defenses: 0,
-      setDefenses: (defenses) => set(() => ({ defenses })),
-      kickTargetsVisible: null,
-      setKickTargetsVisible: (kickTargetsVisible) =>
-        set(() => ({ kickTargetsVisible })),
+      kickTargetsVisible: false,
       kickTarget: null,
-      setKickTarget: (kickTarget) => set(() => ({ kickTarget })),
-      reset: () =>
-        set(() => ({
-          isGameStarted: false,
-          kicks: 0,
-          goals: 0,
-          defenses: 0,
-          kickTarget: null,
-          kickTargetsVisible: false,
-        })),
-    }),
-    {
-      name: storeTable.penaltysStore,
-    }
-  )
-);
+      keeperTarget: null,
+    })),
+}));
