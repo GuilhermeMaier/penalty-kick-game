@@ -234,6 +234,7 @@ const Penaltys = () => {
                     variant="filled"
                     severity={currentResult === "goal" ? "success" : "error"}
                     sx={{ maxWidth: "60%" }}
+                    className="alert"
                   >
                     {alertText}
                   </Alert>
@@ -353,7 +354,10 @@ const Penaltys = () => {
                     <ListItemIcon
                       style={{ paddingRight: 20, minWidth: "auto" }}
                     >
-                      <SportsSoccerRounded style={{ color: "#d36b12" }} />
+                      <SportsSoccerTwoTone
+                        className="spin"
+                        style={{ color: "#d36b12" }}
+                      />
                     </ListItemIcon>
                     <ListItemText>{regra}</ListItemText>
                   </ListItem>

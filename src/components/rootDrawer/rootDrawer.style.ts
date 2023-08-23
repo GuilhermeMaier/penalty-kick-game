@@ -1,18 +1,17 @@
 import styled from "@emotion/styled";
 
-export const AppContainer = styled.div`
-  display: flex;
-  height: 100vh;
+export const Loading = styled.div`
+  width: fit-content;
+  color: #d36b12;
 `;
 
 export const DrawerContainer = styled.div`
   display: flex;
-  min-width: 10%;
+  width: 20%;
 `;
 
 export const PageContainer = styled.div`
   display: flex;
   flex: 1;
-  justify-content: center;
-  padding: 50px;
+  width: 80%;
 `;
