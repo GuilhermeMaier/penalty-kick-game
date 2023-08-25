@@ -16,24 +16,32 @@ import {
   Container,
   HorizontalCenter,
   HorizontalEvenSpacer,
+  HorizontalSpacer,
   MainContentContainer,
   MainTitle,
   VerticalSpacer,
 } from "@styles/base.style";
-import goleira2 from "@utils/images/goleira-2.jpg";
+import bola from "@utils/images/ball.svg";
+import goleira from "@utils/images/goleira.jpg";
+import keeper from "@utils/images/keeper.png";
+import keeperLeftJump from "@utils/images/keeperLeftJump.png";
+import keeperRightJump from "@utils/images/keeperRightJump.png";
 import { DicePosition } from "@utils/types/dicePosition";
 import { KickPosition, KickPositionTranslated } from "@utils/types/kickTarget";
 import ROUTES from "@utils/types/routes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
+  BolaContainer,
   BottomCenterContainer,
   BottomLeftContainer,
   BottomRightContainer,
   CenteredAlertContainer,
   FillerCenteredBottomContainer,
   FillerCenteredTopContainer,
-  ImageContainer,
+  GoleiraContainer,
+  GoleiroContainer,
+  GoleiroInnerContainer,
   ImageParentContainer,
   TopCenterContainer,
   TopLeftContainer,
@@ -60,11 +68,14 @@ const Penaltys = () => {
     reset,
   } = usePenaltysStore();
   const [isLoading, setIsLoading] = useState(true);
+  const [doAnimation, setDoAnimation] = useState(false);
+  const [ballAnimationClassName, setBallAnimationClassName] =
+    useState<string>(null);
   const [isAlertOpened, setIsAlertOpened] = useState(false);
   const [alertText, setAlertText] = useState(null);
-  const [currentResult, setCurrentResult] = useState<"goal" | "defense" | null>(
-    null
-  );
+  const [currentResult, setCurrentResult] = useState<
+    "goal" | "defense" | "win" | "lose"
+  >(null);
   const regras: string[] = [
     "1 moeda dá direito a 5 chutes.",
     "Se o goleiro defender 3 chutes você perde.",
@@ -101,6 +112,11 @@ const Penaltys = () => {
     const ballDirection = kickTarget || getRandomKickTarget();
     const keeperDirection = getRandomKeeperTarget();
 
+    setKickTarget(ballDirection);
+    setKeeperTarget(keeperDirection);
+    setDoAnimation(true);
+    setBallAnimationClassName(`ball${kickTarget}Animation`);
+
     if (ballDirection !== keeperDirection) {
       setCurrentResult("goal");
       setAlertText(
@@ -127,6 +143,8 @@ const Penaltys = () => {
     setTimeout(() => {
       setCurrentResult(null);
       setIsAlertOpened(false);
+      setDoAnimation(false);
+      setBallAnimationClassName(null);
     }, 7500);
   };
 
@@ -143,10 +161,21 @@ const Penaltys = () => {
   };
 
   useEffect(() => {
-    console.log("isGameStarted", isGameStarted);
-    console.log("goals", goals);
-    console.log("defenses", defenses);
-    console.log("kicks", kicks);
+    if (goals === 3) {
+      setCurrentResult("win");
+      setAlertText(`Parabéns! Você venceu e recebeu 3 moedas!`);
+    } else if (defenses === 3) {
+      setCurrentResult("win");
+      setAlertText(`Dessa vez o goleiro teve mais sorte! Jogue novamente!`);
+    }
+    if (goals === 3 || defenses === 3) {
+      setTimeout(() => {
+        setCurrentResult(null);
+        setIsAlertOpened(false);
+        setAlertText(null);
+        reset();
+      }, 5000);
+    }
   }, [goals, defenses]);
 
   useEffect(() => {
@@ -174,10 +203,10 @@ const Penaltys = () => {
 
           <HorizontalEvenSpacer>
             <ImageParentContainer>
-              <ImageContainer>
+              <GoleiraContainer>
                 <Image
                   alt="Goleira"
-                  src={goleira2}
+                  src={goleira}
                   placeholder="blur"
                   width={612}
                   height={453}
@@ -185,7 +214,7 @@ const Penaltys = () => {
                     objectFit: "cover",
                   }}
                 />
-              </ImageContainer>
+              </GoleiraContainer>
               {isGameStarted && (
                 <FillerCenteredTopContainer
                   style={{ padding: 8, position: "absolute" }}
@@ -232,7 +261,11 @@ const Penaltys = () => {
                 {isAlertOpened && (
                   <Alert
                     variant="filled"
-                    severity={currentResult === "goal" ? "success" : "error"}
+                    severity={
+                      currentResult === "goal" || currentResult === "win"
+                        ? "success"
+                        : "error"
+                    }
                     sx={{ maxWidth: "60%" }}
                     className="alert"
                   >
@@ -241,9 +274,60 @@ const Penaltys = () => {
                 )}
               </CenteredAlertContainer>
               <FillerCenteredBottomContainer style={{ padding: 8 }}>
+                <BolaContainer
+                  className={`${doAnimation && ballAnimationClassName}`}
+                >
+                  <Image
+                    alt="Bola"
+                    src={bola}
+                    placeholder="empty"
+                    width={100}
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                </BolaContainer>
+                <GoleiroContainer
+                // className={`${doAnimation && ballAnimationClassName}`}
+                >
+                  <GoleiroInnerContainer>
+                    <Image
+                      alt="keeperLeftJump"
+                      src={keeperLeftJump}
+                      placeholder="empty"
+                      height={176}
+                      style={{
+                        objectFit: "cover",
+                      }}
+                    />
+                  </GoleiroInnerContainer>
+                  {/* <GoleiroInnerContainer style={{ transform: scale(1.3) }}> */}
+                  <GoleiroInnerContainer>
+                    <Image
+                      alt="Keeper"
+                      src={keeper}
+                      placeholder="empty"
+                      height={176}
+                      style={{
+                        objectFit: "cover",
+                      }}
+                    />
+                  </GoleiroInnerContainer>
+                  <GoleiroInnerContainer>
+                    <Image
+                      alt="keeperRightJump"
+                      src={keeperRightJump}
+                      placeholder="empty"
+                      height={176}
+                      style={{
+                        objectFit: "cover",
+                      }}
+                    />
+                  </GoleiroInnerContainer>
+                </GoleiroContainer>
                 <div style={{ display: kickTargetsVisible ? "block" : "none" }}>
                   <TopLeftContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() => handleKickPosition(KickPosition.TopLeft)}
                   >
                     <SportsSoccerRounded
@@ -256,7 +340,7 @@ const Penaltys = () => {
                     />
                   </TopLeftContainer>
                   <TopCenterContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() => handleKickPosition(KickPosition.TopCenter)}
                   >
                     <SportsSoccerRounded
@@ -269,7 +353,7 @@ const Penaltys = () => {
                     />
                   </TopCenterContainer>
                   <TopRightContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() => handleKickPosition(KickPosition.TopRight)}
                   >
                     <SportsSoccerRounded
@@ -282,7 +366,7 @@ const Penaltys = () => {
                     />
                   </TopRightContainer>
                   <BottomLeftContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() => handleKickPosition(KickPosition.BottomLeft)}
                   >
                     <SportsSoccerRounded
@@ -295,7 +379,7 @@ const Penaltys = () => {
                     />
                   </BottomLeftContainer>
                   <BottomCenterContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() =>
                       handleKickPosition(KickPosition.BottomCenter)
                     }
@@ -310,7 +394,7 @@ const Penaltys = () => {
                     />
                   </BottomCenterContainer>
                   <BottomRightContainer
-                    className="iconContainer"
+                    className="targetIconContainer"
                     onClick={() => handleKickPosition(KickPosition.BottomRight)}
                   >
                     <SportsSoccerRounded
@@ -323,28 +407,32 @@ const Penaltys = () => {
                     />
                   </BottomRightContainer>
                 </div>
-                <ButtonHolder
-                  style={{ display: kickTargetsVisible ? "none" : "block" }}
-                >
-                  <Button
-                    variant="contained"
-                    disabled={!isGameStarted || currentResult !== null}
-                    onClick={() => {
-                      setKickTargetsVisible(true);
-                    }}
-                  >
-                    Escolher Posição
-                  </Button>
-                </ButtonHolder>
-                <ButtonHolder>
-                  <Button
-                    variant="contained"
-                    disabled={!isGameStarted || currentResult !== null}
-                    onClick={handleKick}
-                  >
-                    Chutar
-                  </Button>
-                </ButtonHolder>
+                <HorizontalSpacer style={{ margin: 0, width: "100%" }}>
+                  <ButtonHolder>
+                    <Button
+                      variant="contained"
+                      disabled={
+                        !isGameStarted ||
+                        currentResult !== null ||
+                        kickTargetsVisible
+                      }
+                      onClick={() => {
+                        setKickTargetsVisible(true);
+                      }}
+                    >
+                      Escolher Posição
+                    </Button>
+                  </ButtonHolder>
+                  <ButtonHolder>
+                    <Button
+                      variant="contained"
+                      disabled={!isGameStarted || currentResult !== null}
+                      onClick={handleKick}
+                    >
+                      Chutar
+                    </Button>
+                  </ButtonHolder>
+                </HorizontalSpacer>
               </FillerCenteredBottomContainer>
             </ImageParentContainer>
             <VerticalSpacer>

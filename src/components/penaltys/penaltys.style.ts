@@ -10,7 +10,7 @@ export const ImageParentContainer = styled.div`
   max-height: 449px;
 `;
 
-export const ImageContainer = styled.div`
+export const GoleiraContainer = styled.div`
   position: absolute;
   min-width: 612;
   width: 612;
@@ -18,6 +18,32 @@ export const ImageContainer = styled.div`
   min-height: 449;
   height: 449;
   max-height: 449;
+`;
+
+export const BolaContainer = styled.div`
+  position: absolute;
+  width: 100px;
+  height: 110px;
+  top: 315px;
+  left: 263px;
+  /* z-index: 2; */
+`;
+
+export const GoleiroContainer = styled.div`
+  position: absolute;
+  height: 176px;
+  top: 154px;
+  width: 71%;
+  margin-left: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* z-index: 1; */
+`;
+
+export const GoleiroInnerContainer = styled.div`
+  /* position: fixed; */
 `;
 
 export const FillerCenteredTopContainer = styled.div`
@@ -45,6 +71,7 @@ export const CenteredAlertContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  /* z-index: 3; */
 `;
 
 export const InImageBottomButton = styled.div`
