@@ -18,11 +18,16 @@ import "@styles/layout.style.sass";
 import ROUTES from "@utils/types/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const MyApp = ({ Component, pageProps }) => {
   const { selectedRoute, setSelectedRoute } = useRoutesStore();
+  const [breakpoint, setBreakpoint] = useState(false);
   const size = useWindowSize();
-  const breakpoint = size.innerWidth < 750;
+
+  useEffect(() => {
+    setBreakpoint(size.innerWidth < 750);
+  }, [size]);
 
   return (
     <AppContainer>
@@ -39,37 +44,43 @@ const MyApp = ({ Component, pageProps }) => {
               }}
             />
           </div>
-          <Button
-            variant="text"
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              paddingLeft: 25,
-              paddingRight: 25,
-              marginBottom: breakpoint ? 0 : 5,
-              color: "#ff7500",
-              background:
-                selectedRoute === ROUTES.Penaltys ? "#fff0e3" : "white",
-            }}
-            startIcon={<SportsSoccer />}
-          >
-            <Link href={ROUTES.Penaltys}>Pênaltis</Link>
-          </Button>
-          <Button
-            variant="text"
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              paddingLeft: 25,
-              paddingRight: 25,
-              marginBottom: breakpoint ? 0 : 5,
-              color: "#ff7500",
-              background: selectedRoute === ROUTES.Bank ? "#fff0e3" : "white",
-            }}
-            startIcon={<SavingsOutlined />}
-          >
-            <Link href={ROUTES.Bank}>Banco</Link>
-          </Button>
+          <Link href={ROUTES.Penaltys}>
+            <Button
+              variant="text"
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                paddingLeft: 25,
+                paddingRight: 25,
+                marginBottom: breakpoint ? 0 : 5,
+                width: "100%",
+                color: "#ff7500",
+                background:
+                  selectedRoute === ROUTES.Penaltys ? "#fff0e3" : "white",
+              }}
+              startIcon={<SportsSoccer />}
+            >
+              Pênaltis
+            </Button>
+          </Link>
+          <Link href={ROUTES.Bank}>
+            <Button
+              variant="text"
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                paddingLeft: 25,
+                paddingRight: 25,
+                marginBottom: breakpoint ? 0 : 5,
+                width: "100%",
+                color: "#ff7500",
+                background: selectedRoute === ROUTES.Bank ? "#fff0e3" : "white",
+              }}
+              startIcon={<SavingsOutlined />}
+            >
+              Banco
+            </Button>
+          </Link>
         </RootDrawer>
       </DrawerContainer>
       <PageContainer>

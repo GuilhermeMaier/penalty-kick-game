@@ -1,9 +1,15 @@
 import Drawer from "@mui/material/Drawer";
 import useWindowSize from "@rooks/use-window-size";
+import { useEffect, useState } from "react";
 
 const RootDrawer = ({ children }) => {
+  const [breakpoint, setBreakpoint] = useState(false);
   const size = useWindowSize();
-  const breakpoint = size.innerWidth < 750;
+
+  useEffect(() => {
+    setBreakpoint(size.innerWidth < 750);
+  }, [size]);
+
   return (
     <Drawer
       open

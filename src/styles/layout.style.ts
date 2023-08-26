@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const AppContainer = styled.div`
   display: flex;
+  min-height: 100vh;
 `;
 
 export const DrawerContainer = styled.div`
