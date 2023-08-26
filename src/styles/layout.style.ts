@@ -12,6 +12,7 @@ export const DrawerContainer = styled.div`
   @media (max-width: 750px) {
     position: absolute;
     width: 100%;
+    min-width: 712px;
   }
 `;
 
