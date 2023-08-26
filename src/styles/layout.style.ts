@@ -9,7 +9,8 @@ export const DrawerContainer = styled.div`
   min-width: 10%;
 
   @media (max-width: 750px) {
-    display: none;
+    position: absolute;
+    width: 100%;
   }
 `;
 
@@ -18,4 +19,8 @@ export const PageContainer = styled.div`
   flex: 1;
   justify-content: center;
   padding: 50px;
+
+  @media (max-width: 750px) {
+    margin-top: 25px;
+  }
 `;
