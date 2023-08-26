@@ -8,6 +8,7 @@ import {
   MainContentContainer,
   MainTitle,
 } from "@styles/base.style";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 const Bank = () => {
@@ -25,46 +26,53 @@ const Bank = () => {
   }, []);
 
   return (
-    <Container>
-      {isLoading ? (
-        <BallLoading />
-      ) : (
-        <MainContentContainer>
-          <MainTitle>Banco de Moedas</MainTitle>
-          <CommonText>{`${
-            coins === 0
-              ? "Você está sem moedas!"
-              : `Atualmente você tem apenas ${coinsFormatted} ${
-                  coins === 1 ? "moeda" : "moedas"
-                }! `
-          }`}</CommonText>
-          <CommonText>Compre mais moedas para continuar jogando!</CommonText>
-          <div style={{ display: "flex", marginTop: 15 }}>
-            <TextField
-              label="Moedas"
-              variant="standard"
-              value={coinsQuantity}
-              onChange={({ target: { value } }) => {
-                setCoinsQuantity(
-                  new Intl.NumberFormat().format(
-                    Number(value.replace(/[^0-9]/g, ""))
-                  )
-                );
-              }}
-            />
-            <Button
-              variant="outlined"
-              style={{ marginLeft: 15 }}
-              onClick={() => {
-                setCoins(coins + Number(coinsQuantity.replace(/[^0-9]/g, "")));
-              }}
-            >
-              Comprar
-            </Button>
-          </div>
-        </MainContentContainer>
-      )}
-    </Container>
+    <>
+      <Head>
+        <title>Banco de Moedas</title>
+      </Head>
+      <Container>
+        {isLoading ? (
+          <BallLoading />
+        ) : (
+          <MainContentContainer>
+            <MainTitle>Banco de Moedas</MainTitle>
+            <CommonText>{`${
+              coins === 0
+                ? "Você está sem moedas!"
+                : `Atualmente você tem apenas ${coinsFormatted} ${
+                    coins === 1 ? "moeda" : "moedas"
+                  }! `
+            }`}</CommonText>
+            <CommonText>Compre mais moedas para continuar jogando!</CommonText>
+            <div style={{ display: "flex", marginTop: 15 }}>
+              <TextField
+                label="Moedas"
+                variant="standard"
+                value={coinsQuantity}
+                onChange={({ target: { value } }) => {
+                  setCoinsQuantity(
+                    new Intl.NumberFormat().format(
+                      Number(value.replace(/[^0-9]/g, ""))
+                    )
+                  );
+                }}
+              />
+              <Button
+                variant="outlined"
+                style={{ marginLeft: 15 }}
+                onClick={() => {
+                  setCoins(
+                    coins + Number(coinsQuantity.replace(/[^0-9]/g, ""))
+                  );
+                }}
+              >
+                Comprar
+              </Button>
+            </div>
+          </MainContentContainer>
+        )}
+      </Container>
+    </>
   );
 };
 

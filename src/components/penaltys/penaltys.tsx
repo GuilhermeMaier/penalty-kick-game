@@ -26,6 +26,7 @@ import { GameRules } from "@utils/types/dataLexicon";
 import { DicePosition } from "@utils/types/dicePosition";
 import { KickPosition, KickPositionTranslated } from "@utils/types/kickTarget";
 import ROUTES from "@utils/types/routes";
+import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
@@ -199,312 +200,317 @@ const Penaltys = () => {
   }, [useCoinsStore.persist?.hasHydrated()]);
 
   return (
-    <Container>
-      {isLoading ? (
-        <BallLoading />
-      ) : (
-        <MainContentContainer>
-          <MainTitle>Jogo de Cobrança de Pênaltis</MainTitle>
-          <CommonText>{`${
-            coins === 0
-              ? "Você está sem moedas!"
-              : `Atualmente você tem ${coinsFormatted} ${
-                  coins === 1 ? "moeda" : "moedas"
-                }! `
-          }`}</CommonText>
+    <>
+      <Head>
+        <title>Cobrança de Pênaltis</title>
+      </Head>
+      <Container>
+        {isLoading ? (
+          <BallLoading />
+        ) : (
+          <MainContentContainer>
+            <MainTitle>Jogo de Cobrança de Pênaltis</MainTitle>
+            <CommonText>{`${
+              coins === 0
+                ? "Você está sem moedas!"
+                : `Atualmente você tem ${coinsFormatted} ${
+                    coins === 1 ? "moeda" : "moedas"
+                  }! `
+            }`}</CommonText>
 
-          <HorizontalEvenSpacer>
-            <ImageParentContainer>
-              <GoalpostContainer>
-                <Image
-                  alt="Goleira"
-                  src={"/goalpost.jpg"}
-                  width={612}
-                  height={453}
-                  style={{
-                    objectFit: "cover",
-                  }}
-                />
-              </GoalpostContainer>
-              <FillerCenteredTopContainer
-                style={{ padding: 8, position: "absolute" }}
-              >
-                {isGameStarted && (
-                  <>
-                    <div>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={goals > 0 ? "success" : "disabled"}
-                      />
-                    </div>
-                    <div>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={goals > 1 ? "success" : "disabled"}
-                      />
-                    </div>
-                    <div>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={goals > 2 ? "success" : "disabled"}
-                      />
-                    </div>
-                    <div style={{ marginLeft: 25 }}>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={defenses > 0 ? "error" : "disabled"}
-                      />
-                    </div>
-                    <div>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={defenses > 1 ? "error" : "disabled"}
-                      />
-                    </div>
-                    <div>
-                      <SportsSoccerTwoTone
-                        className={"spin"}
-                        color={defenses > 2 ? "error" : "disabled"}
-                      />
-                    </div>
-                  </>
-                )}
-              </FillerCenteredTopContainer>
-              <CenteredAlertContainer>
-                {isAlertOpened && (
-                  <Alert
-                    className="alert fourth-layer"
-                    variant="filled"
-                    severity={
-                      currentResult === "goal" || currentResult === "win"
-                        ? "success"
-                        : "error"
-                    }
-                    sx={{ maxWidth: "60%" }}
-                  >
-                    {alertText}
-                  </Alert>
-                )}
-              </CenteredAlertContainer>
-              <FillerCenteredBottomContainer style={{ padding: 8 }}>
-                <BallContainer
-                  animationName={ballAnimationName}
-                  className={`third-layer`}
-                >
+            <HorizontalEvenSpacer>
+              <ImageParentContainer>
+                <GoalpostContainer>
                   <Image
-                    alt="Bola"
-                    src={"/ball.svg"}
-                    placeholder="empty"
-                    width={100}
-                    height={100}
+                    alt="Goleira"
+                    src={"/goalpost.jpg"}
+                    width={612}
+                    height={453}
                     style={{
                       objectFit: "cover",
                     }}
                   />
-                </BallContainer>
-                <KeeperContainer>
-                  <LeftKeeperInnerContainer
-                    animationName={keeperAnimationName}
-                    className="first-layer"
+                </GoalpostContainer>
+                <FillerCenteredTopContainer
+                  style={{ padding: 8, position: "absolute" }}
+                >
+                  {isGameStarted && (
+                    <>
+                      <div>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={goals > 0 ? "success" : "disabled"}
+                        />
+                      </div>
+                      <div>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={goals > 1 ? "success" : "disabled"}
+                        />
+                      </div>
+                      <div>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={goals > 2 ? "success" : "disabled"}
+                        />
+                      </div>
+                      <div style={{ marginLeft: 25 }}>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={defenses > 0 ? "error" : "disabled"}
+                        />
+                      </div>
+                      <div>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={defenses > 1 ? "error" : "disabled"}
+                        />
+                      </div>
+                      <div>
+                        <SportsSoccerTwoTone
+                          className={"spin"}
+                          color={defenses > 2 ? "error" : "disabled"}
+                        />
+                      </div>
+                    </>
+                  )}
+                </FillerCenteredTopContainer>
+                <CenteredAlertContainer>
+                  {isAlertOpened && (
+                    <Alert
+                      className="alert fourth-layer"
+                      variant="filled"
+                      severity={
+                        currentResult === "goal" || currentResult === "win"
+                          ? "success"
+                          : "error"
+                      }
+                      sx={{ maxWidth: "60%" }}
+                    >
+                      {alertText}
+                    </Alert>
+                  )}
+                </CenteredAlertContainer>
+                <FillerCenteredBottomContainer style={{ padding: 8 }}>
+                  <BallContainer
+                    animationName={ballAnimationName}
+                    className={`third-layer`}
                   >
                     <Image
-                      alt="keeperLeftJump"
-                      src={"/keeperLeftJump.png"}
+                      alt="Bola"
+                      src={"/ball.svg"}
                       placeholder="empty"
-                      width={296}
-                      height={176}
+                      width={100}
+                      height={100}
                       style={{
                         objectFit: "cover",
                       }}
                     />
-                  </LeftKeeperInnerContainer>
-                  <CenterKeeperInnerContainer
-                    animationName={keeperAnimationName}
-                    className="first-layer"
-                  >
-                    <Image
-                      alt="Keeper"
-                      src={"/keeper.png"}
-                      placeholder="empty"
-                      width={107}
-                      height={176}
-                      style={{
-                        objectFit: "cover",
-                      }}
-                    />
-                  </CenterKeeperInnerContainer>
-                  <RightKeeperInnerContainer
-                    animationName={keeperAnimationName}
-                    className="first-layer"
-                  >
-                    <Image
-                      alt="keeperRightJump"
-                      src={"/keeperRightJump.png"}
-                      placeholder="empty"
-                      width={296}
-                      height={176}
-                      style={{
-                        objectFit: "cover",
-                      }}
-                    />
-                  </RightKeeperInnerContainer>
-                </KeeperContainer>
-                <TargetsContainer visible={kickTargetsVisible}>
-                  <TopLeftContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.TopLeft)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.TopLeft
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </TopLeftContainer>
-                  <TopCenterContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.TopCenter)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.TopCenter
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </TopCenterContainer>
-                  <TopRightContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.TopRight)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.TopRight
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </TopRightContainer>
-                  <BottomLeftContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.BottomLeft)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.BottomLeft
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </BottomLeftContainer>
-                  <BottomCenterContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.BottomCenter)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.BottomCenter
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </BottomCenterContainer>
-                  <BottomRightContainer
-                    className="second-layer targetIconContainer"
-                    onClick={() => setKickTarget(KickPosition.BottomRight)}
-                  >
-                    <SportsSoccerRounded
-                      className={
-                        kickTarget === KickPosition.BottomRight
-                          ? "spinScale"
-                          : "spin"
-                      }
-                      sx={{ fontSize: 50 }}
-                    />
-                  </BottomRightContainer>
-                </TargetsContainer>
-                <HorizontalSpacer style={{ margin: 0, width: "100%" }}>
-                  <ButtonHolder>
-                    <Button
-                      variant="contained"
-                      disabled={
-                        !isGameStarted ||
-                        currentResult !== null ||
-                        kickTargetsVisible
-                      }
-                      onClick={() => {
-                        setKickTargetsVisible(true);
-                      }}
+                  </BallContainer>
+                  <KeeperContainer>
+                    <LeftKeeperInnerContainer
+                      animationName={keeperAnimationName}
+                      className="first-layer"
                     >
-                      Escolher Posição
-                    </Button>
-                  </ButtonHolder>
-                  <ButtonHolder>
-                    <Button
-                      variant="contained"
-                      disabled={!isGameStarted || currentResult !== null}
-                      onClick={handleKick}
-                    >
-                      Chutar
-                    </Button>
-                  </ButtonHolder>
-                </HorizontalSpacer>
-              </FillerCenteredBottomContainer>
-            </ImageParentContainer>
-            <VerticalSpacer>
-              <List>
-                {GameRules.map((regra) => (
-                  <ListItem style={{ padding: "0" }}>
-                    <ListItemIcon
-                      style={{ paddingRight: 20, minWidth: "auto" }}
-                    >
-                      <SportsSoccerTwoTone
-                        className="spin"
-                        style={{ color: "#d36b12" }}
+                      <Image
+                        alt="keeperLeftJump"
+                        src={"/keeperLeftJump.png"}
+                        placeholder="empty"
+                        width={296}
+                        height={176}
+                        style={{
+                          objectFit: "cover",
+                        }}
                       />
-                    </ListItemIcon>
-                    <ListItemText>{regra}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-              <Flex>
-                <ButtonHolder>
-                  <HorizontalCenter>
-                    <Button
-                      variant="contained"
-                      disabled={coins === 0 || isGameStarted}
-                      onClick={startGame}
+                    </LeftKeeperInnerContainer>
+                    <CenterKeeperInnerContainer
+                      animationName={keeperAnimationName}
+                      className="first-layer"
                     >
-                      Quero Jogar
-                    </Button>
-                  </HorizontalCenter>
-                </ButtonHolder>
-                <ButtonHolder visible={coins === 0 && !isGameStarted}>
-                  <HorizontalCenter>
-                    <Button
-                      variant="contained"
-                      onClick={() =>
-                        window.location.replace(
-                          `${window.location.origin}${ROUTES.Bank}`
-                        )
-                      }
+                      <Image
+                        alt="Keeper"
+                        src={"/keeper.png"}
+                        placeholder="empty"
+                        width={107}
+                        height={176}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
+                    </CenterKeeperInnerContainer>
+                    <RightKeeperInnerContainer
+                      animationName={keeperAnimationName}
+                      className="first-layer"
                     >
-                      Vá ao banco
-                    </Button>
-                  </HorizontalCenter>
-                </ButtonHolder>
-              </Flex>
-            </VerticalSpacer>
-          </HorizontalEvenSpacer>
-        </MainContentContainer>
-      )}
-    </Container>
+                      <Image
+                        alt="keeperRightJump"
+                        src={"/keeperRightJump.png"}
+                        placeholder="empty"
+                        width={296}
+                        height={176}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
+                    </RightKeeperInnerContainer>
+                  </KeeperContainer>
+                  <TargetsContainer visible={kickTargetsVisible}>
+                    <TopLeftContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.TopLeft)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.TopLeft
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </TopLeftContainer>
+                    <TopCenterContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.TopCenter)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.TopCenter
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </TopCenterContainer>
+                    <TopRightContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.TopRight)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.TopRight
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </TopRightContainer>
+                    <BottomLeftContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.BottomLeft)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.BottomLeft
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </BottomLeftContainer>
+                    <BottomCenterContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.BottomCenter)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.BottomCenter
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </BottomCenterContainer>
+                    <BottomRightContainer
+                      className="second-layer targetIconContainer"
+                      onClick={() => setKickTarget(KickPosition.BottomRight)}
+                    >
+                      <SportsSoccerRounded
+                        className={
+                          kickTarget === KickPosition.BottomRight
+                            ? "spinScale"
+                            : "spin"
+                        }
+                        sx={{ fontSize: 50 }}
+                      />
+                    </BottomRightContainer>
+                  </TargetsContainer>
+                  <HorizontalSpacer style={{ margin: 0, width: "100%" }}>
+                    <ButtonHolder>
+                      <Button
+                        variant="contained"
+                        disabled={
+                          !isGameStarted ||
+                          currentResult !== null ||
+                          kickTargetsVisible
+                        }
+                        onClick={() => {
+                          setKickTargetsVisible(true);
+                        }}
+                      >
+                        Escolher Posição
+                      </Button>
+                    </ButtonHolder>
+                    <ButtonHolder>
+                      <Button
+                        variant="contained"
+                        disabled={!isGameStarted || currentResult !== null}
+                        onClick={handleKick}
+                      >
+                        Chutar
+                      </Button>
+                    </ButtonHolder>
+                  </HorizontalSpacer>
+                </FillerCenteredBottomContainer>
+              </ImageParentContainer>
+              <VerticalSpacer>
+                <List>
+                  {GameRules.map((regra) => (
+                    <ListItem style={{ padding: "0" }}>
+                      <ListItemIcon
+                        style={{ paddingRight: 20, minWidth: "auto" }}
+                      >
+                        <SportsSoccerTwoTone
+                          className="spin"
+                          style={{ color: "#d36b12" }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText>{regra}</ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+                <Flex>
+                  <ButtonHolder>
+                    <HorizontalCenter>
+                      <Button
+                        variant="contained"
+                        disabled={coins === 0 || isGameStarted}
+                        onClick={startGame}
+                      >
+                        Quero Jogar
+                      </Button>
+                    </HorizontalCenter>
+                  </ButtonHolder>
+                  <ButtonHolder visible={coins === 0 && !isGameStarted}>
+                    <HorizontalCenter>
+                      <Button
+                        variant="contained"
+                        onClick={() =>
+                          window.location.replace(
+                            `${window.location.origin}${ROUTES.Bank}`
+                          )
+                        }
+                      >
+                        Vá ao banco
+                      </Button>
+                    </HorizontalCenter>
+                  </ButtonHolder>
+                </Flex>
+              </VerticalSpacer>
+            </HorizontalEvenSpacer>
+          </MainContentContainer>
+        )}
+      </Container>
+    </>
   );
 };
 
