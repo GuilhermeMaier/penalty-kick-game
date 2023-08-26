@@ -1,4 +1,9 @@
 import styled from "@emotion/styled";
+import {
+  BallAnimationProps,
+  CommonComponentProps,
+  KeeperAnimationProps,
+} from "@utils/types/dataLexicon";
 
 export const ImageParentContainer = styled.div`
   position: relative;
@@ -20,13 +25,22 @@ export const GoleiraContainer = styled.div`
   max-height: 449;
 `;
 
-export const BolaContainer = styled.div`
+export const BolaContainer = styled.div<BallAnimationProps>`
   position: absolute;
   width: 100px;
   height: 110px;
   top: 315px;
   left: 263px;
-  /* z-index: 2; */
+
+  animation-name: ${(props) => `ball${props.animationName}Animation`};
+  animation-duration: 1500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+`;
+
+export const TargetsContainer = styled.div<CommonComponentProps>`
+  display: ${(props) => (props.visible === true ? "block" : "none")};
 `;
 
 export const GoleiroContainer = styled.div`
@@ -39,11 +53,40 @@ export const GoleiroContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* z-index: 1; */
 `;
 
-export const GoleiroInnerContainer = styled.div`
-  /* position: fixed; */
+export const LeftKeeperInnerContainer = styled.div<KeeperAnimationProps>`
+  position: relative;
+  opacity: 0;
+
+  animation-name: ${(props) => `leftKeeper${props.animationName}Animation`};
+  animation-duration: 1500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+`;
+
+export const CenterKeeperInnerContainer = styled.div<KeeperAnimationProps>`
+  position: relative;
+  scale: 1.3;
+  top: 31px;
+
+  animation-name: ${(props) => `centerKeeper${props.animationName}Animation`};
+  animation-duration: 1500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+`;
+
+export const RightKeeperInnerContainer = styled.div<KeeperAnimationProps>`
+  position: relative;
+  opacity: 0;
+
+  animation-name: ${(props) => `rightKeeper${props.animationName}Animation`};
+  animation-duration: 1500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 `;
 
 export const FillerCenteredTopContainer = styled.div`

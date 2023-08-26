@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { CommonComponentProps } from "@utils/types/dataLexicon";
 
 export const Container = styled.div`
   display: flex;
@@ -24,6 +25,12 @@ export const MainTitle = styled.div`
 
 export const CommonText = styled.div`
   font-size: 18px;
+`;
+
+export const Flex = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 export const HorizontalCenter = styled.div`
@@ -67,8 +74,9 @@ export const Filler = styled.div`
   height: 100%;
 `;
 
-export const ButtonHolder = styled.div`
+export const ButtonHolder = styled.div<CommonComponentProps>`
   background-color: white;
   border-radius: 4px;
   margin: 0 4px;
+  display: ${(props) => (props.visible === false ? "none" : "block")};
 `;

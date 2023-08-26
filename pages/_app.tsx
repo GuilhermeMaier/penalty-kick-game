@@ -1,6 +1,9 @@
 import RootDrawer from "@components/rootDrawer";
-import "@styles/animations.style.sass";
-import "@styles/ballAnimations.style.sass";
+import "@styles/animations/animations.style.sass";
+import "@styles/animations/ballAnimations.style.sass";
+import "@styles/animations/centerKeeperAnimations.style.sass";
+import "@styles/animations/leftKeeperAnimations.style.sass";
+import "@styles/animations/rightKeeperAnimations.style.sass";
 import "@styles/globals.style.sass";
 import {
   AppContainer,
