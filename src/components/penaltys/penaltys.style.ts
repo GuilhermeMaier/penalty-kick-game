@@ -9,13 +9,13 @@ import { KickPosition } from "@utils/types/kickTarget";
 import { TargetIconContainerProps } from "@utils/types/targetIconContainer";
 
 export const MediaHandlerHorizontalEvenSpacer = styled(HorizontalEvenSpacer)`
-  @media (max-width: 650px) {
+  @media (max-width: 750px) {
     flex-direction: column;
   }
 `;
 
 export const MediaHandlerVerticalSpacer = styled(VerticalSpacer)`
-  @media (max-width: 650px) {
+  @media (max-width: 750px) {
     padding: 25px 0;
     ul:first-child {
       margin-bottom: 25px !important;

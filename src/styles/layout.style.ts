@@ -8,7 +8,7 @@ export const DrawerContainer = styled.div`
   display: flex;
   min-width: 10%;
 
-  @media (max-width: 650px) {
+  @media (max-width: 750px) {
     display: none;
   }
 `;
