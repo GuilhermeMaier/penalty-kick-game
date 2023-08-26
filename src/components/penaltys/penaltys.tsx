@@ -77,11 +77,24 @@ const Penaltys = () => {
   const [currentResult, setCurrentResult] = useState<
     "goal" | "defense" | "win" | "lose"
   >(null);
+  const [crowdAudio, setCrowdAudio] = useState<HTMLAudioElement>(null);
+  const animationTime = 1500;
 
-  const playCrowdAudio = () => {
-    const crowdAudio = new Audio("/crowd.mp3");
-    crowdAudio.loop = true;
-    crowdAudio.play();
+  const toggleCrowdAudio = (audio: HTMLAudioElement) => {
+    if (!audio) {
+      const currentCrowdAudio = new Audio("/crowd.mp3");
+      currentCrowdAudio.loop = true;
+      currentCrowdAudio.play();
+      setCrowdAudio(currentCrowdAudio);
+    } else if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  };
+
+  const playSimpleAudio = (src: string) => {
+    new Audio(src).play();
   };
 
   const startGame = () => {
@@ -90,24 +103,27 @@ const Penaltys = () => {
     setGoals(0);
     setDefenses(0);
     setKicks(5);
-    playCrowdAudio();
+    toggleCrowdAudio(crowdAudio);
   };
 
   const handleEndGame = () => {
     if (goals === 3) {
+      playSimpleAudio("/win.mp3");
       setCurrentResult("win");
       setAlertText(`Parabéns! Você venceu e recebeu 3 moedas!`);
       setCoins(coins + 3);
     } else if (defenses === 3) {
+      playSimpleAudio("/lose.mp3");
       setCurrentResult("lose");
       setAlertText(`Dessa vez o goleiro teve mais sorte! Jogue novamente!`);
     }
+    reset();
     setTimeout(() => {
       setCurrentResult(null);
       setIsAlertOpened(false);
       setAlertText(null);
-      reset();
-    }, 5000);
+      toggleCrowdAudio(crowdAudio);
+    }, animationTime * 4);
   };
 
   const rollDice = (): number => {
@@ -117,6 +133,8 @@ const Penaltys = () => {
   };
 
   const handleKick = () => {
+    playSimpleAudio("/whistle.wav");
+
     const ballDirection = kickTarget || getRandomKickTarget();
     const keeperDirection = getRandomKeeperTarget();
 
@@ -126,29 +144,26 @@ const Penaltys = () => {
     setBallAnimationName(ballDirection);
     setKeeperAnimationName(keeperDirection);
 
-    if (ballDirection !== keeperDirection) {
-      setCurrentResult("goal");
-      setAlertText(
-        `Golaaaaaaço!!! Você chutou ${KickPositionTranslated[ballDirection]} sem chance pro goleiro que pulou ${KickPositionTranslated[keeperDirection]}!`
-      );
-    }
-    if (ballDirection === keeperDirection) {
-      setCurrentResult("defense");
-      setAlertText(
-        `Tafareeeeeeeeeeel!!! Você chutou ${KickPositionTranslated[ballDirection]} e o goleiro brilhou encaixando a bola. Sem chances!`
-      );
-    }
-
     setTimeout(() => {
       if (ballDirection !== keeperDirection) {
+        goals < 2 && playSimpleAudio("/goal.mp3");
         setGoals(goals + 1);
+        setCurrentResult("goal");
+        setAlertText(
+          `Golaaaaaaço!!! Você chutou ${KickPositionTranslated[ballDirection]} sem chance pro goleiro que pulou ${KickPositionTranslated[keeperDirection]}!`
+        );
       }
       if (ballDirection === keeperDirection) {
+        defenses < 2 && playSimpleAudio("/tafarel.mp3");
         setDefenses(defenses + 1);
+        setCurrentResult("defense");
+        setAlertText(
+          `Tafareeeeeeeeeeel!!! Você chutou ${KickPositionTranslated[ballDirection]} e o goleiro brilhou encaixando a bola. Sem chances!`
+        );
       }
       setKicks(kicks - 1);
       setIsAlertOpened(true);
-    }, 2500);
+    }, animationTime);
     setTimeout(() => {
       setCurrentResult(null);
       setIsAlertOpened(false);
@@ -156,7 +171,7 @@ const Penaltys = () => {
       setKeeperAnimationName(null);
       setKickTarget(null);
       setKeeperTarget(null);
-    }, 7500);
+    }, animationTime * 4);
   };
 
   const getRandomKickTarget = (): KickPosition => {
