@@ -1,9 +1,27 @@
 import styled from "@emotion/styled";
+import { HorizontalEvenSpacer, VerticalSpacer } from "@styles/base.style";
 import {
   BallAnimationProps,
   CommonComponentProps,
   KeeperAnimationProps,
 } from "@utils/types/dataLexicon";
+import { KickPosition } from "@utils/types/kickTarget";
+import { TargetIconContainerProps } from "@utils/types/targetIconContainer";
+
+export const MediaHandlerHorizontalEvenSpacer = styled(HorizontalEvenSpacer)`
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+`;
+
+export const MediaHandlerVerticalSpacer = styled(VerticalSpacer)`
+  @media (max-width: 400px) {
+    padding: 25px 0;
+    ul:first-child {
+      margin-bottom: 25px !important;
+    }
+  }
+`;
 
 export const ImageParentContainer = styled.div`
   position: relative;
@@ -114,7 +132,6 @@ export const CenteredAlertContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  /* z-index: 3; */
 `;
 
 export const InImageBottomButton = styled.div`
@@ -126,38 +143,65 @@ export const InImageBottomButton = styled.div`
   left: 0;
 `;
 
-export const TopLeftContainer = styled.div`
+export const TargetIconContainer = styled.div<TargetIconContainerProps>`
   position: absolute;
-  left: 100px;
-  top: 155px;
-`;
+  left: ${(props) => {
+    switch (props.position) {
+      case KickPosition.TopLeft:
+        return "100px";
+      case KickPosition.TopCenter:
+        return "288px";
+      case KickPosition.TopRight:
+        return "unset";
+      case KickPosition.BottomLeft:
+        return "95px";
+      case KickPosition.BottomCenter:
+        return "288px";
+      case KickPosition.BottomRight:
+        return "unset";
+    }
+  }};
+  right: ${(props) => {
+    switch (props.position) {
+      case KickPosition.TopLeft:
+        return "unset";
+      case KickPosition.TopCenter:
+        return "unset";
+      case KickPosition.TopRight:
+        return "85px";
+      case KickPosition.BottomLeft:
+        return "unset";
+      case KickPosition.BottomCenter:
+        return "unset";
+      case KickPosition.BottomRight:
+        return "80px";
+    }
+  }};
+  top: ${(props) => {
+    switch (props.position) {
+      case KickPosition.TopLeft:
+        return "155px";
+      case KickPosition.TopCenter:
+        return "155px";
+      case KickPosition.TopRight:
+        return "155px";
+      case KickPosition.BottomLeft:
+        return "280px";
+      case KickPosition.BottomCenter:
+        return "280px";
+      case KickPosition.BottomRight:
+        return "280px";
+    }
+  }};
 
-export const TopCenterContainer = styled.div`
-  position: absolute;
-  left: 288px;
-  top: 155px;
-`;
+  svg {
+    color: ${(props) => (props.selected ? "#ff7500" : "#e5c79d")};
+    scale: ${(props) => (props.selected ? 1.2 : 1)};
+    transition: all 0.5s ease;
+  }
 
-export const TopRightContainer = styled.div`
-  position: absolute;
-  right: 85px;
-  top: 155px;
-`;
-
-export const BottomLeftContainer = styled.div`
-  position: absolute;
-  left: 95px;
-  top: 280px;
-`;
-
-export const BottomCenterContainer = styled.div`
-  position: absolute;
-  left: 288px;
-  top: 280px;
-`;
-
-export const BottomRightContainer = styled.div`
-  position: absolute;
-  right: 80px;
-  top: 280px;
+  &:hover svg {
+    color: #ff7500;
+    scale: 1.2;
+  }
 `;

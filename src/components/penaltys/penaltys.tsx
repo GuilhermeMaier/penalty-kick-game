@@ -1,5 +1,5 @@
 import BallLoading from "@components/ballLoading";
-import { SportsSoccerRounded, SportsSoccerTwoTone } from "@mui/icons-material";
+import { SportsSoccerTwoTone } from "@mui/icons-material";
 import {
   Alert,
   Button,
@@ -10,17 +10,16 @@ import {
 } from "@mui/material";
 import { useCoinsStore } from "@stores/coinsStore";
 import { usePenaltysStore } from "@stores/penaltysStore";
+import { useRoutesStore } from "@stores/routesStore";
 import {
   ButtonHolder,
   CommonText,
   Container,
   Flex,
   HorizontalCenter,
-  HorizontalEvenSpacer,
   HorizontalSpacer,
   MainContentContainer,
   MainTitle,
-  VerticalSpacer,
 } from "@styles/base.style";
 import { GameRules } from "@utils/types/dataLexicon";
 import { DicePosition } from "@utils/types/dicePosition";
@@ -31,9 +30,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   BallContainer,
-  BottomCenterContainer,
-  BottomLeftContainer,
-  BottomRightContainer,
   CenterKeeperInnerContainer,
   CenteredAlertContainer,
   FillerCenteredBottomContainer,
@@ -42,11 +38,11 @@ import {
   ImageParentContainer,
   KeeperContainer,
   LeftKeeperInnerContainer,
+  MediaHandlerHorizontalEvenSpacer,
+  MediaHandlerVerticalSpacer,
   RightKeeperInnerContainer,
+  TargetIconContainer,
   TargetsContainer,
-  TopCenterContainer,
-  TopLeftContainer,
-  TopRightContainer,
 } from "./penaltys.style";
 
 const Penaltys = () => {
@@ -68,6 +64,7 @@ const Penaltys = () => {
     setKeeperTarget,
     reset,
   } = usePenaltysStore();
+  const { setSelectedRoute } = useRoutesStore();
   const [isLoading, setIsLoading] = useState(true);
   const [ballAnimationName, setBallAnimationName] =
     useState<KickPosition>(null);
@@ -199,6 +196,10 @@ const Penaltys = () => {
     }
   }, [useCoinsStore.persist?.hasHydrated()]);
 
+  useEffect(() => {
+    setSelectedRoute(ROUTES.Penaltys);
+  }, []);
+
   return (
     <>
       <Head>
@@ -218,7 +219,7 @@ const Penaltys = () => {
                   }! `
             }`}</CommonText>
 
-            <HorizontalEvenSpacer>
+            <MediaHandlerHorizontalEvenSpacer>
               <ImageParentContainer>
                 <GoalpostContainer>
                   <Image
@@ -355,11 +356,13 @@ const Penaltys = () => {
                     </RightKeeperInnerContainer>
                   </KeeperContainer>
                   <TargetsContainer visible={kickTargetsVisible}>
-                    <TopLeftContainer
-                      className="second-layer targetIconContainer"
+                    <TargetIconContainer
+                      position={KickPosition.TopLeft}
+                      selected={kickTarget === KickPosition.TopLeft}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.TopLeft)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.TopLeft
                             ? "spinScale"
@@ -367,12 +370,14 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </TopLeftContainer>
-                    <TopCenterContainer
-                      className="second-layer targetIconContainer"
+                    </TargetIconContainer>
+                    <TargetIconContainer
+                      position={KickPosition.TopCenter}
+                      selected={kickTarget === KickPosition.TopCenter}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.TopCenter)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.TopCenter
                             ? "spinScale"
@@ -380,12 +385,14 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </TopCenterContainer>
-                    <TopRightContainer
-                      className="second-layer targetIconContainer"
+                    </TargetIconContainer>
+                    <TargetIconContainer
+                      position={KickPosition.TopRight}
+                      selected={kickTarget === KickPosition.TopRight}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.TopRight)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.TopRight
                             ? "spinScale"
@@ -393,12 +400,14 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </TopRightContainer>
-                    <BottomLeftContainer
-                      className="second-layer targetIconContainer"
+                    </TargetIconContainer>
+                    <TargetIconContainer
+                      position={KickPosition.BottomLeft}
+                      selected={kickTarget === KickPosition.BottomLeft}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.BottomLeft)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.BottomLeft
                             ? "spinScale"
@@ -406,12 +415,14 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </BottomLeftContainer>
-                    <BottomCenterContainer
-                      className="second-layer targetIconContainer"
+                    </TargetIconContainer>
+                    <TargetIconContainer
+                      position={KickPosition.BottomCenter}
+                      selected={kickTarget === KickPosition.BottomCenter}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.BottomCenter)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.BottomCenter
                             ? "spinScale"
@@ -419,12 +430,14 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </BottomCenterContainer>
-                    <BottomRightContainer
-                      className="second-layer targetIconContainer"
+                    </TargetIconContainer>
+                    <TargetIconContainer
+                      position={KickPosition.BottomRight}
+                      selected={kickTarget === KickPosition.BottomRight}
+                      className="second-layer"
                       onClick={() => setKickTarget(KickPosition.BottomRight)}
                     >
-                      <SportsSoccerRounded
+                      <SportsSoccerTwoTone
                         className={
                           kickTarget === KickPosition.BottomRight
                             ? "spinScale"
@@ -432,7 +445,7 @@ const Penaltys = () => {
                         }
                         sx={{ fontSize: 50 }}
                       />
-                    </BottomRightContainer>
+                    </TargetIconContainer>
                   </TargetsContainer>
                   <HorizontalSpacer style={{ margin: 0, width: "100%" }}>
                     <ButtonHolder>
@@ -446,6 +459,15 @@ const Penaltys = () => {
                         onClick={() => {
                           setKickTargetsVisible(true);
                         }}
+                        style={
+                          !(
+                            !isGameStarted ||
+                            currentResult !== null ||
+                            kickTargetsVisible
+                          )
+                            ? { background: "#ff7500" }
+                            : {}
+                        }
                       >
                         Escolher Posição
                       </Button>
@@ -455,6 +477,11 @@ const Penaltys = () => {
                         variant="contained"
                         disabled={!isGameStarted || currentResult !== null}
                         onClick={handleKick}
+                        style={
+                          !(!isGameStarted || currentResult !== null)
+                            ? { background: "#ff7500" }
+                            : {}
+                        }
                       >
                         Chutar
                       </Button>
@@ -462,7 +489,7 @@ const Penaltys = () => {
                   </HorizontalSpacer>
                 </FillerCenteredBottomContainer>
               </ImageParentContainer>
-              <VerticalSpacer>
+              <MediaHandlerVerticalSpacer>
                 <List>
                   {GameRules.map((regra) => (
                     <ListItem style={{ padding: "0" }}>
@@ -485,6 +512,11 @@ const Penaltys = () => {
                         variant="contained"
                         disabled={coins === 0 || isGameStarted}
                         onClick={startGame}
+                        style={
+                          !(coins === 0 || isGameStarted)
+                            ? { background: "#ff7500" }
+                            : {}
+                        }
                       >
                         Quero Jogar
                       </Button>
@@ -499,14 +531,15 @@ const Penaltys = () => {
                             `${window.location.origin}${ROUTES.Bank}`
                           )
                         }
+                        style={{ background: "#ff7500" }}
                       >
                         Vá ao banco
                       </Button>
                     </HorizontalCenter>
                   </ButtonHolder>
                 </Flex>
-              </VerticalSpacer>
-            </HorizontalEvenSpacer>
+              </MediaHandlerVerticalSpacer>
+            </MediaHandlerHorizontalEvenSpacer>
           </MainContentContainer>
         )}
       </Container>

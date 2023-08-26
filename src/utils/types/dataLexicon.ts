@@ -2,6 +2,7 @@ import { KickPosition } from "./kickTarget";
 
 export interface CommonComponentProps {
   visible?: boolean;
+  selected?: boolean;
 }
 
 export interface BallAnimationProps {

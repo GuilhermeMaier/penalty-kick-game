@@ -2,12 +2,15 @@ import styled from "@emotion/styled";
 
 export const AppContainer = styled.div`
   display: flex;
-  height: 100vh;
 `;
 
 export const DrawerContainer = styled.div`
   display: flex;
   min-width: 10%;
+
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;
 
 export const PageContainer = styled.div`

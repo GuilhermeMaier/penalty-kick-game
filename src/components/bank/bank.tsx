@@ -2,19 +2,22 @@ import BallLoading from "@components/ballLoading";
 import { Button, TextField } from "@mui/material";
 import { useBankStore } from "@stores/bankStore";
 import { useCoinsStore } from "@stores/coinsStore";
+import { useRoutesStore } from "@stores/routesStore";
 import {
   CommonText,
   Container,
   MainContentContainer,
   MainTitle,
 } from "@styles/base.style";
+import ROUTES from "@utils/types/routes";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
 const Bank = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { coins, setCoins, coinsFormatted } = useCoinsStore();
   const { coinsQuantity, setCoinsQuantity } = useBankStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { setSelectedRoute } = useRoutesStore();
 
   useEffect(() => {
     useCoinsStore.persist?.hasHydrated() === true &&
@@ -23,6 +26,7 @@ const Bank = () => {
 
   useEffect(() => {
     setCoinsQuantity("0");
+    setSelectedRoute(ROUTES.Bank);
   }, []);
 
   return (
@@ -59,7 +63,11 @@ const Bank = () => {
               />
               <Button
                 variant="outlined"
-                style={{ marginLeft: 15 }}
+                style={{
+                  marginLeft: 15,
+                  color: "#ff7500",
+                  borderColor: "#ff7500",
+                }}
                 onClick={() => {
                   setCoins(
                     coins + Number(coinsQuantity.replace(/[^0-9]/g, ""))
