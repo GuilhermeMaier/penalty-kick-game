@@ -15,7 +15,7 @@ export const ImageParentContainer = styled.div`
   max-height: 449px;
 `;
 
-export const GoleiraContainer = styled.div`
+export const GoalpostContainer = styled.div`
   position: absolute;
   min-width: 612;
   width: 612;
@@ -25,7 +25,7 @@ export const GoleiraContainer = styled.div`
   max-height: 449;
 `;
 
-export const BolaContainer = styled.div<BallAnimationProps>`
+export const BallContainer = styled.div<BallAnimationProps>`
   position: absolute;
   width: 100px;
   height: 110px;
@@ -43,7 +43,7 @@ export const TargetsContainer = styled.div<CommonComponentProps>`
   display: ${(props) => (props.visible === true ? "block" : "none")};
 `;
 
-export const GoleiroContainer = styled.div`
+export const KeeperContainer = styled.div`
   position: absolute;
   height: 176px;
   top: 154px;

@@ -22,11 +22,6 @@ import {
   MainTitle,
   VerticalSpacer,
 } from "@styles/base.style";
-import bola from "@utils/images/ball.svg";
-import goleira from "@utils/images/goleira.jpg";
-import keeper from "@utils/images/keeper.png";
-import keeperLeftJump from "@utils/images/keeperLeftJump.png";
-import keeperRightJump from "@utils/images/keeperRightJump.png";
 import { GameRules } from "@utils/types/dataLexicon";
 import { DicePosition } from "@utils/types/dicePosition";
 import { KickPosition, KickPositionTranslated } from "@utils/types/kickTarget";
@@ -34,7 +29,7 @@ import ROUTES from "@utils/types/routes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
-  BolaContainer,
+  BallContainer,
   BottomCenterContainer,
   BottomLeftContainer,
   BottomRightContainer,
@@ -42,9 +37,9 @@ import {
   CenteredAlertContainer,
   FillerCenteredBottomContainer,
   FillerCenteredTopContainer,
-  GoleiraContainer,
-  GoleiroContainer,
+  GoalpostContainer,
   ImageParentContainer,
+  KeeperContainer,
   LeftKeeperInnerContainer,
   RightKeeperInnerContainer,
   TargetsContainer,
@@ -83,12 +78,19 @@ const Penaltys = () => {
     "goal" | "defense" | "win" | "lose"
   >(null);
 
+  const playCrowdAudio = () => {
+    const crowdAudio = new Audio("/crowd.mp3");
+    crowdAudio.loop = true;
+    crowdAudio.play();
+  };
+
   const startGame = () => {
     setCoins(coins - 1);
     setIsGameStarted(true);
     setGoals(0);
     setDefenses(0);
     setKicks(5);
+    playCrowdAudio();
   };
 
   const handleEndGame = () => {
@@ -198,18 +200,17 @@ const Penaltys = () => {
 
           <HorizontalEvenSpacer>
             <ImageParentContainer>
-              <GoleiraContainer>
+              <GoalpostContainer>
                 <Image
                   alt="Goleira"
-                  src={goleira}
-                  placeholder="blur"
+                  src={"/goalpost.jpg"}
                   width={612}
                   height={453}
                   style={{
                     objectFit: "cover",
                   }}
                 />
-              </GoleiraContainer>
+              </GoalpostContainer>
               <FillerCenteredTopContainer
                 style={{ padding: 8, position: "absolute" }}
               >
@@ -271,29 +272,31 @@ const Penaltys = () => {
                 )}
               </CenteredAlertContainer>
               <FillerCenteredBottomContainer style={{ padding: 8 }}>
-                <BolaContainer
+                <BallContainer
                   animationName={ballAnimationName}
                   className={`third-layer`}
                 >
                   <Image
                     alt="Bola"
-                    src={bola}
+                    src={"/ball.svg"}
                     placeholder="empty"
                     width={100}
+                    height={100}
                     style={{
                       objectFit: "cover",
                     }}
                   />
-                </BolaContainer>
-                <GoleiroContainer>
+                </BallContainer>
+                <KeeperContainer>
                   <LeftKeeperInnerContainer
                     animationName={keeperAnimationName}
                     className="first-layer"
                   >
                     <Image
                       alt="keeperLeftJump"
-                      src={keeperLeftJump}
+                      src={"/keeperLeftJump.png"}
                       placeholder="empty"
+                      width={296}
                       height={176}
                       style={{
                         objectFit: "cover",
@@ -306,8 +309,9 @@ const Penaltys = () => {
                   >
                     <Image
                       alt="Keeper"
-                      src={keeper}
+                      src={"/keeper.png"}
                       placeholder="empty"
+                      width={107}
                       height={176}
                       style={{
                         objectFit: "cover",
@@ -320,15 +324,16 @@ const Penaltys = () => {
                   >
                     <Image
                       alt="keeperRightJump"
-                      src={keeperRightJump}
+                      src={"/keeperRightJump.png"}
                       placeholder="empty"
+                      width={296}
                       height={176}
                       style={{
                         objectFit: "cover",
                       }}
                     />
                   </RightKeeperInnerContainer>
-                </GoleiroContainer>
+                </KeeperContainer>
                 <TargetsContainer visible={kickTargetsVisible}>
                   <TopLeftContainer
                     className="second-layer targetIconContainer"
